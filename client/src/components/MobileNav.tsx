@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { Menu } from "lucide-react";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
@@ -10,6 +11,7 @@ import {
 } from "./ui/sheet";
 
 export const MobileNav = () => {
+  const { user, isAuthenticated, loginWithRedirect } = useAuth0();
   return (
     <Sheet>
       <SheetTrigger>
@@ -17,7 +19,11 @@ export const MobileNav = () => {
       </SheetTrigger>
       <SheetContent className="space-y-2.5 p-1">
         <SheetTitle>
-          <span>Welcome to Food Commerce</span>
+          {isAuthenticated ? (
+            <span>{user?.given_name || user?.name}</span>
+          ) : (
+            <span>Welcome to Food Commerce</span>
+          )}
         </SheetTitle>
         <Separator />
         <SheetDescription className="flex">
